@@ -1,0 +1,112 @@
+/* --------------------------------- GLOBAL --------------------------------- */
+@import './assets/icons/bootstrap-icons/font/bootstrap-icons.css';
+@import './assets/icons/fontawesome-free-6.0.0-web/css/all.css';
+
+@font-face {
+  font-family: Graphik;
+  src: url(./assets/fonts/Graphik-Font-Family/GraphikLight.otf);
+}
+
+@font-face {
+  font-family: Graphik-bold;
+  src: url(./assets/fonts/Graphik-Font-Family/GraphikSemibold.otf);
+}
+
+@font-face {
+  font-family: Blacklisted;
+  src: url(./assets/fonts/Blacklisted.ttf);
+}
+@font-face {
+  font-family: 'Font Awesome 6 Brands';
+  src: url(./assets/icons/fontawesome-free-6.0.0-web/webfonts/fa-brands-400.ttf);
+}
+
+@font-face {
+  font-family: 'Font Awesome 6 Free';
+  src: url(./assets/icons/fontawesome-free-6.0.0-web/webfonts/fa-solid-900.ttf);
+}
+
+:root {
+  --purple-main: rgb(160, 108, 213);
+  --purple-light: rgb(184, 147, 221);
+  --purple-dark: rgb(130, 71, 190);
+  --black-main: #141414;
+  --black-light: #252526;
+  --font: Graphik, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-bold: Graphik-bold, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --font-special: Blacklisted, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --fa-font-brands: 'Font Awesome 6 Brands';
+  --fa-font-solid: 'Font Awesome 6 Free';
+}
+
+/* ------------------------------ GENERAL STYLE ----------------------------- */
+
+body {
+  position: relative;
+  background-image: url('./assets/images/PolygonLuminary.svg');
+  background-size: cover;
+  color: white;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+button {
+  font-family: var(--font);
+}
+
+button {
+  background: rgba(130, 71, 190, 0.7);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  padding: 1rem;
+  cursor: pointer;
+  transition: background 0.5s;
+}
+
+button:hover {
+  background: rgba(130, 71, 190, 1);
+}
+
+button:active {
+  background: rgb(184, 147, 221);
+}
+
+.bi {
+  color: white;
+  font-size: 1.8rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+#blur-container {
+  background: rgba(0, 0, 0, 0);
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  /* pointer-events: none; */
+  z-index: 0;
+  transition: background 0.5s;
+}
+
+#blur-container.blur {
+  background: rgba(0, 0, 0, 0.6);
+}
+
+#container {
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+}
+
+/* -------------------------------- NAVIGATION ------------------------------ */
