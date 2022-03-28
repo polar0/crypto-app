@@ -1,0 +1,78 @@
+.crypto .search {
+  position: relative;
+  display: flex;
+  z-index: 2;
+}
+
+.crypto i {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.crypto input[type='text'] {
+  background: rgba(130, 71, 190, 0.2);
+  color: #ffffff;
+  caret-color: #ffffff;
+  font-family: var(--font);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.5rem 0.5rem 0.5rem 3rem;
+  width: 100%;
+
+  transition: padding 0.5s;
+}
+
+.crypto input[type='text']::placeholder {
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+.crypto input[type='text']:focus {
+  padding: 0.7rem 0.7rem 0.7rem 3rem;
+}
+
+.search-container {
+  position: absolute;
+  background: rgba(130, 71, 190, 0.4);
+  display: grid;
+  top: 3rem;
+  left: 0;
+  width: 100%;
+
+  border: 0.01rem solid rgba(160, 108, 213, 0.3);
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.search-content {
+  position: relative;
+  display: grid;
+  width: 100%;
+}
+
+.search-title {
+  font-family: var(--font);
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+}
+.search-item,
+.search-header {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  padding: 1rem 2rem;
+  border-top: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.search-header {
+  display: none;
+}
+
+.search-header > * {
+  opacity: 0.5;
+}
+.search-item:hover {
+  cursor: pointer;
+  background: rgba(160, 108, 213, 0.3);
+}

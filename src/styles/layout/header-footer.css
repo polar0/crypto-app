@@ -1,0 +1,33 @@
+/* ---------------------------------- HEADER -------------------------------- */
+.header {
+  background: rgba(130, 71, 190, 0.6);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  padding-left: 1rem;
+}
+
+.header .title {
+  font-size: 1.4rem;
+}
+
+.menu {
+  font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.menu button {
+  font-size: 1rem;
+  padding: 1rem 3rem;
+}
+
+/* ---------------------------------- FOOTER -------------------------------- */
+
+.footer {
+  background: rgba(130, 71, 190, 0.6);
+  font-size: 0.9rem;
+  display: flex;
+  place-content: center;
+  padding: 0.4rem;
+}

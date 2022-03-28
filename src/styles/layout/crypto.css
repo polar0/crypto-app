@@ -1,0 +1,123 @@
+.crypto {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.crypto .assets-table {
+  background: rgba(130, 71, 190, 0.1);
+  display: grid;
+
+  border: 0.01rem solid rgba(160, 108, 213, 0.3);
+  border-radius: 6px;
+}
+
+.crypto #result .assets-table {
+  position: relative;
+  display: none;
+}
+
+.crypto .assets-table > .table-title {
+  font-family: var(--font);
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 2rem;
+  align-items: center;
+}
+
+.crypto .assets-table > .table-title .update-time {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+.crypto .assets-table > .table-title select {
+  background: rgba(160, 108, 213, 0.3);
+  color: #ffffff;
+  font-family: var(--font);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.3rem;
+}
+
+.crypto .assets-table > .table-header > * {
+  opacity: 0.5;
+}
+
+.crypto .assets-table > .table-content {
+  display: grid;
+}
+
+.crypto .assets-table > .table-header,
+.crypto .assets-table > .table-content > .table-item {
+  display: grid;
+  grid-template-columns: 6ch 1fr 1fr 1fr 1fr;
+  align-items: center;
+  padding: 1rem 2rem;
+  border-top: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.crypto .assets-table > .table-content > .table-item:hover {
+  cursor: pointer;
+  background: rgba(160, 108, 213, 0.3);
+}
+
+.crypto .assets-table > .table-content > .table-item > .table-item-currency,
+.search-item > .search-item-currency {
+  display: grid;
+  grid-template-areas:
+    'currency-icon currency-name'
+    'currency-icon currency-shortcut';
+  justify-self: start;
+  align-items: center;
+  gap: 0 1rem;
+}
+
+.table-item > .table-item-currency > .table-item-currency-icon,
+.search-item > .search-item-currency > .search-item-currency-icon {
+  grid-area: currency-icon;
+}
+
+.table-item > .table-item-currency > .table-item-currency-name,
+.search-item > .search-item-currency > .search-item-currency-name {
+  grid-area: currency-name;
+}
+
+.table-item > .table-item-currency > .table-item-currency-shortcut,
+.search-item > .search-item-currency > .search-item-currency-shortcut {
+  grid-area: currency-shortcut;
+}
+
+.table-item > div > div:nth-child(2),
+.search-item > .search-item-currency > div:nth-child(3) {
+  opacity: 0.5;
+}
+
+.table-item > .table-item-variation.positive {
+  color: rgb(97, 201, 97);
+}
+
+.table-item > .table-item-variation.positive::after {
+  content: '%';
+  color: rgb(97, 201, 97);
+  padding-left: 0.2rem;
+}
+
+.table-item > .table-item-variation.negative {
+  color: rgb(194, 80, 99);
+}
+
+.table-item > .table-item-variation.negative::after {
+  content: '%';
+  color: rgb(194, 80, 99);
+  padding-left: 0.2rem;
+}
+
+.table-item > .table-item-limits > div:nth-child(1) {
+  color: #fbaf00;
+}
+
+#leaderboard {
+  position: relative;
+}

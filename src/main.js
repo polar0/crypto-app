@@ -1,4 +1,5 @@
-import './style.css';
+import './styles/style.css';
+import { getPageToDisplay } from './components/pages/pages';
 
 // Etherscan
 // 5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V
@@ -28,6 +29,17 @@ import './style.css';
 //    &tag=latest
 //    &apikey=YourApiKeyToken
 
-// ATTRIBUTION
-// Powered by Etherscan.io APIs
-// Powered by CoinGecko
+// Coinguecko
+
+// Get current price vs USD
+// `https://api.coingecko.com/api/v3/coin/markets?ids=${currency}&vs_currencies=usd`
+
+(function displayData() {
+  getPageToDisplay();
+})();
+
+// Rajouter d'autres données
+// Changement de page / Extension leaderboard
+// Update automatique des valeurs (juste le prix et ce qui change, par ex une autre function qui change le textcontent de tout ça seulement)
+// Updated x seconds ago
+// toLowerCase l'input pour pas que ça compte

@@ -1,0 +1,8 @@
+@import './global.css';
+
+@import './layout/header-footer.css';
+@import './layout/crypto.css';
+@import './layout/searchbox.css';
+@import './layout/nft.css';
+
+@import './utils/loader.css';

@@ -1,0 +1,36 @@
+#loader {
+  background: rgba(0, 0, 0, 0.2);
+  /* position: absolute; */
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#loader .wrapped-loader {
+  content: ' ';
+  display: block;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 8px solid #fff;
+  margin: 2rem;
+  border-color: #fff transparent #fff transparent;
+  animation: loader 1.2s linear infinite;
+}
+
+@keyframes loader {
+  0% {
+    transform: rotate(0deg);
+    border-color: #fff transparent #fff transparent;
+  }
+  50% {
+    border-color: rgb(130, 71, 190) transparent rgb(130, 71, 190) transparent;
+  }
+  100% {
+    transform: rotate(360deg);
+    border-color: #fff transparent #fff transparent;
+  }
+}
