@@ -2,51 +2,74 @@ import {
   loadCurrencyData,
   getAllCurencyData,
   getTrendingCurrencyData,
-} from './data';
-import { displayLoadingScreen, sortData } from './utils';
+  getTopCurrencyData,
+} from './crypto-data';
+import { displayLoadingScreen, sortData } from '../utils';
 
 const container = document.querySelector('.search-content');
 
 let currencies;
 let trending;
+let popular = [];
 let searchActive;
 
 async function loadSearchFunctions() {
   document.addEventListener('click', getFocus);
+  document
+    .querySelector('.search-button')
+    .addEventListener('click', getCurrencyInput);
   currencies = await getAllCurencyData();
   trending = await getTrendingCurrencyData();
+
+  let temp = await getTopCurrencyData(100);
+
+  for (const coin of trending.coins) {
+    temp.push(coin.item);
+  }
+
+  for (const item of temp) {
+    popular.push(item.name.toLowerCase());
+  }
 }
 
 function getCurrencyInput(e) {
+  console.log(e.target);
   // Get the crypto on Enter
   if (e.code === 'Enter') {
-    loadCurrencyData(this.value);
+    loadCurrencyData(this.value.toLowerCase());
     hideSearchScreen();
     // Hide the screen on Escape
   } else if (e.code === 'Escape') {
     hideSearchScreen();
+  } else if (e.target === document.querySelector('.search-button')) {
+    loadCurrencyData(
+      document.querySelector('input#crc-search').value.toLowerCase(),
+    );
+    hideSearchScreen();
+    e.stopPropagation();
   } else {
     showRelatedCurrency(this.value);
   }
   // display trending coins if search is empty
-  if (this.value === '') showTrendingCurrency();
+  this.value === '' && showTrendingCurrency();
 }
 
 async function showRelatedCurrency(value) {
   value = value.toLowerCase();
-  const matches = sortData(currencies, value);
+  // Sort results by matching with the input value
+  // Display top #100 and trending currencies first
+  const matches = sortData(currencies, value, popular);
 
   displaySearchScreen(matches);
 }
 
 async function showTrendingCurrency() {
-  if (document.activeElement === document.querySelector('input#crc-search'))
+  document.activeElement === document.querySelector('input#crc-search') &&
     displaySearchScreen(trending);
 }
 
 function hideSearchScreen(status) {
   document.querySelector('#blur-container').classList.remove('blur');
-  document.querySelector('.search-container').removeChild(container);
   document.querySelector('.search-container').style.display = 'none';
   document.querySelector('input#crc-search').blur();
   searchActive = false;
@@ -54,13 +77,12 @@ function hideSearchScreen(status) {
 
 async function displaySearchScreen(matches) {
   document.querySelector('#blur-container').classList.add('blur');
-  document.querySelector('.search-container').appendChild(container);
   document.querySelector('.search-container').style.display = 'grid';
-  container.textContent = '';
+  document.querySelector('.search-content').textContent = '';
 
   currencies === undefined
-    ? displayLoadingScreen(true, container)
-    : displayLoadingScreen(false, container);
+    ? displayLoadingScreen(true, document.querySelector('.search-content'))
+    : displayLoadingScreen(false, document.querySelector('.search-content'));
 
   if (matches !== trending) {
     document.querySelector('.search-title').textContent = 'Result';
@@ -68,7 +90,7 @@ async function displaySearchScreen(matches) {
     matches.length > 10 ? (length = 10) : (length = matches.length);
     for (let i = 0; i < length; i++) {
       const item = createSearchBox(currencies[currencies.indexOf(matches[i])]);
-      container.appendChild(item);
+      document.querySelector('.search-content').appendChild(item);
 
       item.addEventListener('click', function () {
         loadCurrencyData(this.children[3].textContent);
@@ -79,7 +101,7 @@ async function displaySearchScreen(matches) {
     document.querySelector('.search-title').textContent = 'Trending';
     for (const coin of trending.coins) {
       const item = createTrendingBox(coin.item);
-      container.appendChild(item);
+      document.querySelector('.search-content').appendChild(item);
 
       item.addEventListener('click', function () {
         loadCurrencyData(coin.item.id);
@@ -169,8 +191,11 @@ function getFocus(e) {
   }
 }
 
-function cancelSearchFunctions() {
+function cancelCryptoSearchFunctions() {
   document.removeEventListener('click', getFocus);
+  document
+    .querySelector('.search-button')
+    .removeEventListener('click', getCurrencyInput);
 }
 
 // Eventuellement trier par market cap avec un autre outil
@@ -179,5 +204,5 @@ export {
   getCurrencyInput,
   showTrendingCurrency,
   loadSearchFunctions,
-  cancelSearchFunctions,
+  cancelCryptoSearchFunctions,
 };

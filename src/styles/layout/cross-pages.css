@@ -1,0 +1,37 @@
+.update-time {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+select {
+  background: rgba(160, 108, 213, 0.3);
+  color: #ffffff;
+  font-family: var(--font);
+  border: 0;
+  border-radius: 6px;
+  padding: 0.3rem;
+}
+
+.table-item > .table-item-variation.positive,
+.eth-price-var-container > div.positive {
+  color: rgb(97, 201, 97);
+}
+
+.table-item > .table-item-variation.positive::after,
+.eth-price-var-container > div.positive::after {
+  content: '%  ▲';
+  color: rgb(97, 201, 97);
+  padding-left: 0.2rem;
+}
+
+.table-item > .table-item-variation.negative,
+.eth-price-var-container > div.negative {
+  color: rgb(194, 80, 99);
+}
+
+.table-item > .table-item-variation.negative::after,
+.eth-price-var-container > div.negative::after {
+  content: '% ▼';
+  color: rgb(194, 80, 99);
+  padding-left: 0.2rem;
+}

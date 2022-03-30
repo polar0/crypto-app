@@ -1,20 +1,15 @@
-import { displayLoadingScreen, displayError } from './utils';
-import { createItem, displayUpdateTime, updateTable } from './table';
-import { getCurrencyInput } from './search';
+import { displayLoadingScreen, displayError } from '../utils';
+import { createItem, updateTable } from './crypto-content';
+import { fetchData, displayUpdateTime } from '../utils';
 
 let timerSingle;
 let timerLeader;
 
 async function getSingleCurrencyData(currency) {
   if (currency === '') return 'Error';
-  const value = await fetch(
+  const data = await fetchData(
     `https://api.coingecko.com/api/v3/coins/${currency}?market_data=true`,
-    { mode: 'cors' },
   );
-
-  if (!value.ok) return 'Error';
-
-  const data = await value.json();
 
   return {
     rank: data.market_cap_rank,
@@ -31,11 +26,9 @@ async function getSingleCurrencyData(currency) {
 }
 
 async function getTopCurrencyData(num) {
-  const value = await fetch(
+  const data = await fetchData(
     `https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc`,
-    { mode: 'cors' },
   );
-  const data = await value.json();
   let dataArray = [];
 
   for (let i = 0; i < num; i++) {
@@ -56,21 +49,16 @@ async function getTopCurrencyData(num) {
 }
 
 async function getAllCurencyData() {
-  const value = await fetch(
+  const data = await fetchData(
     `https://api.coingecko.com/api/v3/coins/list?include_platform=true`,
-    { mode: 'cors' },
   );
-  const data = await value.json();
   return data;
 }
 
 async function getTrendingCurrencyData() {
-  const value = await fetch(
+  const data = await fetchData(
     `https://api.coingecko.com/api/v3/search/trending`,
-    { mode: 'cors' },
   );
-  const data = await value.json();
-
   return data;
 }
 
@@ -106,7 +94,7 @@ async function loadLeaderboard(limit) {
     leaderboard.appendChild(item[0]);
   }
   updateLeaderboard(leaderboard, limit);
-  displayUpdateTime();
+  displayUpdateTime(document.querySelector('.update-time'));
 }
 
 function updateLeaderboard(content, limit) {
@@ -115,7 +103,7 @@ function updateLeaderboard(content, limit) {
   timerLeader = setInterval(async function () {
     const data = await getTopCurrencyData(limit);
     updateTable(content, limit, data);
-    displayUpdateTime();
+    displayUpdateTime(document.querySelector('.update-time'));
   }, 10000);
 }
 

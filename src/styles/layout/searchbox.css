@@ -1,17 +1,26 @@
-.crypto .search {
+.search {
   position: relative;
   display: flex;
   z-index: 2;
 }
 
-.crypto i {
+.search i {
   position: absolute;
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.crypto input[type='text'] {
+.search button {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 6px;
+  padding: 0.2rem 1rem;
+}
+
+input[type='text'] {
   background: rgba(130, 71, 190, 0.2);
   color: #ffffff;
   caret-color: #ffffff;
@@ -24,12 +33,12 @@
   transition: padding 0.5s;
 }
 
-.crypto input[type='text']::placeholder {
+input[type='text']::placeholder {
   color: #ffffff;
   opacity: 0.5;
 }
 
-.crypto input[type='text']:focus {
+input[type='text']:focus {
   padding: 0.7rem 0.7rem 0.7rem 3rem;
 }
 

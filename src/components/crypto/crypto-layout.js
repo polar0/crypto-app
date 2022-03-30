@@ -1,14 +1,15 @@
-import { loadLeaderboard } from '../data';
+import { loadLeaderboard } from './crypto-data';
 import {
   getCurrencyInput,
   showTrendingCurrency,
   loadSearchFunctions,
-} from '../search';
+} from './crypto-search';
 
 const container = document.querySelector('.content');
 
 function loadCrypto() {
   container.textContent = '';
+  container.classList.add('page-1');
   const error = document.createElement('div');
   error.classList.add('error');
   container.appendChild(error);
@@ -28,6 +29,9 @@ function loadCrypto() {
   input.setAttribute('placeholder', 'Search for a cryptocurrency');
   const logo = document.createElement('i');
   logo.classList.add('logo', 'fa-solid', 'fa-search');
+  const searchBtn = document.createElement('button');
+  searchBtn.classList.add('search-button');
+  searchBtn.textContent = 'Search';
   const searchContainer = document.createElement('div');
   searchContainer.classList.add('search-container');
   searchContainer.style.display = 'none';
@@ -78,12 +82,18 @@ function loadCrypto() {
   searchHeaderTrending.appendChild(shSymbol2);
   searchHeaderTrending.appendChild(shId2);
 
+  // Content
+  const searchContent = document.createElement('div');
+  searchContent.classList.add('search-content');
+
   searchContainer.appendChild(searchTitle);
   searchContainer.appendChild(searchHeaderResult);
   searchContainer.appendChild(searchHeaderTrending);
+  searchContainer.appendChild(searchContent);
 
   search.appendChild(input);
   search.appendChild(logo);
+  search.appendChild(searchBtn);
   search.appendChild(searchContainer);
 
   // Result section

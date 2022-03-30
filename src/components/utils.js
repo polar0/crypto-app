@@ -1,3 +1,11 @@
+async function fetchData(url) {
+  const value = await fetch(url, { mode: 'cors' });
+  if (!value.ok) return 'Error';
+  const data = await value.json();
+
+  return data;
+}
+
 function displayError(err) {
   const div = document.querySelector('.error');
   div.classList.add('active');
@@ -22,13 +30,22 @@ function displayLoadingScreen(status, parent) {
   }
 }
 
-function sortData(dataArray, keyword) {
-  let search_results = dataArray
-    .filter((prof) => {
-      // Filter results by doing case insensitive match on name here
+function displayUpdateTime(container) {
+  const time = new Date();
+  container.textContent = `Updated the ${time.getFullYear()}-${
+    time.getMonth() + 1
+  }-${time.getDate()} at ${time.getHours()}:${('0' + time.getMinutes()).slice(
+    -2,
+  )}`;
+}
+
+function sortData(dataArray, keyword, compare) {
+  let searchResults = dataArray
+    .filter((input) => {
+      // Filter results by doing case insensitive match on name
       return (
-        prof.name.toLowerCase().includes(keyword.toLowerCase()) ||
-        prof.symbol.toLowerCase().includes(keyword.toLowerCase())
+        input.name.toLowerCase().includes(keyword.toLowerCase()) ||
+        input.symbol.toLowerCase().includes(keyword.toLowerCase())
       );
     })
     .sort((a, b) => {
@@ -52,8 +69,90 @@ function sortData(dataArray, keyword) {
         else return -1;
       }
     });
+  if (compare !== undefined) {
+    searchResults = searchResults.sort((a, b) => {
+      for (const ref of compare) {
+        if (
+          ref.indexOf(a.name.toLowerCase()) > ref.indexOf(b.name.toLowerCase())
+        ) {
+          return -1;
+        } else if (
+          ref.indexOf(a.name.toLowerCase()) < ref.indexOf(b.name.toLowerCase())
+        ) {
+          return 1;
+        }
+      }
+    });
+  }
 
-  return search_results;
+  return searchResults;
 }
 
-export { displayError, displayLoadingScreen, sortData };
+function sortCurrencies(array) {
+  const exceptions = {
+    usd: 1,
+    eur: 2,
+  };
+
+  const sorted = array.sort((a, b) => {
+    if (exceptions[a] && exceptions[b]) {
+      //if both items are exceptions
+      return exceptions[a] - exceptions[b];
+    } else if (exceptions[a]) {
+      //only `a` is in exceptions, sort it to front
+      return -1;
+    } else if (exceptions[b]) {
+      //only `b` is in exceptions, sort it to back
+      return 1;
+    } else {
+      //no exceptions to account for, return alphabetic sort
+      return a.localeCompare(b);
+    }
+  });
+
+  return sorted;
+}
+
+function formatPrice(price) {
+  return price
+    .toString()
+    .split('')
+    .reverse()
+    .join('')
+    .replace(/([0-9]{3})/g, '$1 ')
+    .replace(/ \./g, '.')
+    .split('')
+    .reverse()
+    .join('');
+}
+
+// Convert currency to crypto
+
+async function convertCurrencyToCrypto(currencyUnit, currencyValue, crypto) {
+  const cryptoValue = await getCurrencyValue(crypto);
+  const value = cryptoValue.market_data.current_price[currencyUnit];
+  const converted = currencyValue / value;
+  return converted;
+}
+
+async function getCurrencyValue(currency) {
+  const value = await fetch(
+    `https://api.coingecko.com/api/v3/coins/${currency}?tickers=true&market_data=true`,
+    { mode: 'cors' },
+  );
+
+  if (!value.ok) return 'Error';
+  const data = await value.json();
+  return data;
+}
+
+export {
+  fetchData,
+  displayError,
+  displayLoadingScreen,
+  displayUpdateTime,
+  sortData,
+  sortCurrencies,
+  formatPrice,
+  convertCurrencyToCrypto,
+};

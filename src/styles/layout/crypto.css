@@ -1,7 +1,18 @@
+.content.page-1 {
+  display: grid;
+  justify-items: center;
+}
+
 .crypto {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  width: min(100%, 1100px);
+}
+
+.crypto > div {
+  overflow: scroll;
+  min-width: 750px;
 }
 
 .crypto .assets-table {
@@ -25,20 +36,6 @@
   grid-template-columns: 1fr auto auto;
   gap: 2rem;
   align-items: center;
-}
-
-.crypto .assets-table > .table-title .update-time {
-  font-size: 1rem;
-  opacity: 0.8;
-}
-
-.crypto .assets-table > .table-title select {
-  background: rgba(160, 108, 213, 0.3);
-  color: #ffffff;
-  font-family: var(--font);
-  border: 0;
-  border-radius: 6px;
-  padding: 0.3rem;
 }
 
 .crypto .assets-table > .table-header > * {
@@ -92,26 +89,6 @@
 .table-item > div > div:nth-child(2),
 .search-item > .search-item-currency > div:nth-child(3) {
   opacity: 0.5;
-}
-
-.table-item > .table-item-variation.positive {
-  color: rgb(97, 201, 97);
-}
-
-.table-item > .table-item-variation.positive::after {
-  content: '%';
-  color: rgb(97, 201, 97);
-  padding-left: 0.2rem;
-}
-
-.table-item > .table-item-variation.negative {
-  color: rgb(194, 80, 99);
-}
-
-.table-item > .table-item-variation.negative::after {
-  content: '%';
-  color: rgb(194, 80, 99);
-  padding-left: 0.2rem;
 }
 
 .table-item > .table-item-limits > div:nth-child(1) {

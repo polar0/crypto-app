@@ -2,7 +2,8 @@
 
 @import './layout/header-footer.css';
 @import './layout/crypto.css';
+@import './layout/tracker.css';
+@import './layout/cross-pages.css';
 @import './layout/searchbox.css';
-@import './layout/nft.css';
 
 @import './utils/loader.css';

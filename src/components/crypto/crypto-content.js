@@ -1,3 +1,5 @@
+import { formatPrice } from '../utils';
+
 function createItem(data) {
   const item = document.createElement('div');
   item.classList.add('table-item');
@@ -65,19 +67,6 @@ function createItem(data) {
   return [item, rank, iconImg, symbol, name, value, ref];
 }
 
-function formatPrice(price) {
-  return price
-    .toString()
-    .split('')
-    .reverse()
-    .join('')
-    .replace(/([0-9]{3})/g, '$1 ')
-    .replace(/ \./g, '.')
-    .split('')
-    .reverse()
-    .join('');
-}
-
 function updateTable(container, limit, data) {
   if (limit === 'none') {
     const newItem = createItem(data);
@@ -91,14 +80,4 @@ function updateTable(container, limit, data) {
   }
 }
 
-function displayUpdateTime() {
-  const container = document.querySelector('.update-time');
-  const time = new Date();
-  container.textContent = `Updated the ${time.getFullYear()}-${
-    time.getMonth() + 1
-  }-${time.getDate()} at ${time.getHours()}:${('0' + time.getMinutes()).slice(
-    -2,
-  )}`;
-}
-
-export { createItem, updateTable, displayUpdateTime };
+export { createItem, updateTable };

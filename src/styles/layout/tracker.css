@@ -1,0 +1,160 @@
+.tracker {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 1rem;
+  /* width: min(100%, 1400px); */
+}
+
+.tracker .tools {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 1rem;
+}
+
+.eth-price-container,
+.eth-gas-container {
+  background: rgba(130, 71, 190, 0.1);
+  display: grid;
+  gap: 0.5rem;
+
+  border: 0.01rem solid rgba(160, 108, 213, 0.3);
+  border-radius: 6px;
+}
+
+.eth-price-header,
+.eth-gas-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 1rem;
+  padding: 0 2rem;
+  align-items: center;
+  border-bottom: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.eth-price-title,
+.eth-gas-title {
+  font-family: var(--font);
+  font-size: 1.2rem;
+  padding: 1rem 0;
+}
+
+.eth-price-content {
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.eth-price-value {
+  font-size: 2rem;
+  padding-right: 2rem;
+}
+
+.eth-price-ref {
+  opacity: 0.5;
+  padding-bottom: 1rem;
+}
+
+.eth-price-var-container {
+  grid-row: span 2;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  justify-items: center;
+  align-items: center;
+  gap: 2rem;
+  padding: 0 0 1rem 2rem;
+  border-left: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.eth-price-var-container > div::before {
+  color: #ffffff;
+  padding-right: 0.5rem;
+  opacity: 0.5;
+}
+
+.eth-price-var-container > div:nth-child(1):before {
+  content: '24h';
+}
+.eth-price-var-container > div:nth-child(2):before {
+  content: '7d';
+}
+.eth-price-var-container > div:nth-child(3):before {
+  content: '14d';
+}
+.eth-price-var-container > div:nth-child(4):before {
+  content: '30d';
+}
+
+.eth-price-container .update-time {
+  grid-column: span 2;
+  padding-top: 1rem;
+  border-top: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.eth-gas-content {
+  padding: 1rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.eth-gas-caption {
+  font-size: 1.2rem;
+  grid-column: span 2;
+}
+
+.eth-gas-input-container {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 0.5rem;
+}
+
+.eth-gas-ref-eth,
+.eth-gas-ref-currency {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+}
+
+.eth-gas-input-container > div:nth-child(1) {
+  grid-column: span 2;
+}
+
+input[type='number'] {
+  background: rgba(130, 71, 190, 0.2);
+  color: #ffffff;
+  caret-color: #ffffff;
+  font-family: var(--font);
+  height: 1rem;
+  border: 0;
+  border-radius: 6px;
+  padding: 0.5rem;
+
+  transition: padding 0.5s;
+}
+
+input[type='number']::placeholder {
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+input[type='number']:focus {
+  padding: 0.7rem;
+}
+
+.eth-gas-input-container button {
+  border-radius: 6px;
+  height: 1rem;
+}
+
+.eth-gas-result {
+  font-family: var(--font);
+  font-size: 1.2rem;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 2rem;
+  border-bottom: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.eth-gas-result-content {
+  color: #fbaf00;
+}
