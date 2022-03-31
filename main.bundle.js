@@ -10303,7 +10303,7 @@
     //    &action=gasestimate
     //    &gasprice=2000000000
     //    &apikey=YourApiKeyToken
-    // Get Eth balance for a Single Adress
+    // Get Eth balance for a Single Address
     // Par exemple avec des personnes connues
     // https://api.etherscan.io/api
     //    ?module=account
@@ -10354,21 +10354,21 @@
       var leaderboardLimit = document.querySelector('#leaderboard select');
       currencySearchInput.addEventListener('keydown', function (e) {
         if (e.keyCode === 13) {
-          loadCurrencyData(this.value);
+          displayCurrencyData(this.value);
           this.blur();
           this.value = '';
         }
       });
       leaderboardLimit.addEventListener('input', function () {
-        loadLeaderboard(this.value);
+        displayLeaderboard(this.value);
       });
 
-      function loadCurrencyData(_x) {
-        return _loadCurrencyData.apply(this, arguments);
+      function displayCurrencyData(_x) {
+        return _displayCurrencyData.apply(this, arguments);
       }
 
-      function _loadCurrencyData() {
-        _loadCurrencyData = _asyncToGenerator(
+      function _displayCurrencyData() {
+        _displayCurrencyData = _asyncToGenerator(
           /*#__PURE__*/ regeneratorRuntime.mark(function _callee(input) {
             var container, content, data, item;
             return regeneratorRuntime.wrap(function _callee$(_context) {
@@ -10392,7 +10392,7 @@
                       break;
                     }
 
-                    displayError(
+                    displayNotif('error', 
                       "We could not find a currency named '".concat(input, "'"),
                     );
                     currencySearchInput.focus();
@@ -10414,15 +10414,15 @@
             }, _callee);
           }),
         );
-        return _loadCurrencyData.apply(this, arguments);
+        return _displayCurrencyData.apply(this, arguments);
       }
 
-      function loadLeaderboard(_x2) {
-        return _loadLeaderboard.apply(this, arguments);
+      function displayLeaderboard(_x2) {
+        return _displayLeaderboard.apply(this, arguments);
       }
 
-      function _loadLeaderboard() {
-        _loadLeaderboard = _asyncToGenerator(
+      function _displayLeaderboard() {
+        _displayLeaderboard = _asyncToGenerator(
           /*#__PURE__*/ regeneratorRuntime.mark(function _callee2(limit) {
             var leaderboard, data, i, item;
             return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -10461,10 +10461,10 @@
             }, _callee2);
           }),
         );
-        return _loadLeaderboard.apply(this, arguments);
+        return _displayLeaderboard.apply(this, arguments);
       }
 
-      function displayError(err) {
+      function displayNotif('error', err) {
         var div = document.querySelector('.error');
         div.classList.add('active');
         div.textContent = err;
@@ -10485,7 +10485,7 @@
         }
       }
 
-      loadLeaderboard(10);
+      displayLeaderboard(10);
     })(); // Rajouter d'autres données
     // Changement de page / Extension leaderboard
     // Update automatique des valeurs (juste le prix et ce qui change, par ex une autre function qui change le textcontent de tout ça seulement)
