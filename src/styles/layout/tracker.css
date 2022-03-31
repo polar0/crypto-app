@@ -7,12 +7,19 @@
 
 .tracker .tools {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
   gap: 1rem;
 }
 
+@media (min-width: 600px) {
+  .tracker .tools {
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  }
+}
+
 .eth-price-container,
-.eth-gas-container {
+.eth-calculator-container,
+.account-info {
+  position: relative;
   background: rgba(130, 71, 190, 0.1);
   display: grid;
   gap: 0.5rem;
@@ -22,7 +29,9 @@
 }
 
 .eth-price-header,
-.eth-gas-header {
+.eth-calculator-header,
+.account-info-header,
+.account-info-transactions-header {
   display: grid;
   grid-template-columns: auto 1fr auto;
   gap: 1rem;
@@ -32,7 +41,9 @@
 }
 
 .eth-price-title,
-.eth-gas-title {
+.eth-calculator-title,
+.account-info-address,
+.account-info-transactions-title {
   font-family: var(--font);
   font-size: 1.2rem;
   padding: 1rem 0;
@@ -90,32 +101,34 @@
   border-top: 0.01rem solid rgba(160, 108, 213, 0.3);
 }
 
-.eth-gas-content {
+.eth-calculator-content {
   padding: 1rem 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  align-items: end;
   gap: 2rem;
+  overflow: scroll;
 }
 
-.eth-gas-caption {
+.eth-calculator-caption {
   font-size: 1.2rem;
   grid-column: span 2;
 }
 
-.eth-gas-input-container {
+.eth-calculator-input-container {
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: 0.5rem;
 }
 
-.eth-gas-ref-eth,
-.eth-gas-ref-currency {
+.eth-calculator-ref-eth,
+.eth-calculator-ref-currency {
   display: flex;
   align-items: center;
   gap: 0.7rem;
 }
 
-.eth-gas-input-container > div:nth-child(1) {
+.eth-calculator-input-container > div:nth-child(1) {
   grid-column: span 2;
 }
 
@@ -141,12 +154,12 @@ input[type='number']:focus {
   padding: 0.7rem;
 }
 
-.eth-gas-input-container button {
+.eth-calculator-input-container button {
   border-radius: 6px;
   height: 1rem;
 }
 
-.eth-gas-result {
+.eth-calculator-result {
   font-family: var(--font);
   font-size: 1.2rem;
   display: flex;
@@ -155,6 +168,133 @@ input[type='number']:focus {
   border-bottom: 0.01rem solid rgba(160, 108, 213, 0.3);
 }
 
-.eth-gas-result-content {
+.eth-calculator-result-content {
   color: #fbaf00;
+}
+
+.account-info-transactions-title {
+  padding: 0 2rem;
+}
+
+.account-info-address {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding-left: 2rem;
+}
+
+.account-info-address-id {
+  font-size: clamp(1rem, 3vw, 1.2rem);
+}
+
+.account-info-address-label {
+  opacity: 0.5;
+}
+
+.account-info-address-copy {
+  padding: 0.5rem;
+}
+
+.account-info-balance {
+  display: grid;
+  align-items: flex-end;
+  gap: 0.5rem;
+  padding: 0 0 1rem 2rem;
+}
+
+.account-info-balance-main {
+  font-size: 1.2rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.account-info-balance-eth::before {
+  content: 'Balance';
+  padding-right: 1rem;
+  opacity: 0.5;
+}
+
+.account-info-balance-eth-min {
+  opacity: 0.5;
+}
+
+.account-info-balance-eth-min::before {
+  content: 'Balance';
+  font-size: 1.2rem;
+  padding-right: 1rem;
+  opacity: 0;
+}
+
+.account-info-transactions-title {
+  padding: 1rem 2rem;
+  border-top: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.account-info-transactions-content {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(5, auto);
+  /* gap: 1rem; */
+  padding: 0.5rem 2rem;
+}
+
+.account-info-transactions-column {
+  position: relative;
+  display: grid;
+}
+
+.account-info-transactions-column a {
+  overflow-x: scroll;
+}
+
+.account-info-transactions-column-header {
+  position: sticky;
+  top: -1px;
+  opacity: 0.5;
+  padding-bottom: 0.5rem;
+  padding: 0.5rem 0.5rem;
+
+  border-bottom: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.account-info-transactions-column-header.is-sticked {
+  opacity: 1;
+  background: rgba(130, 71, 190, 0.9);
+}
+
+.account-info-transactions-column > div {
+  border-bottom: 0.01rem solid rgba(160, 108, 213, 0.3);
+}
+
+.account-info-transactions-column
+  > a:not(.account-info-transactions-column-header) {
+  padding: 0.5rem 0;
+  margin: 0 0.5rem;
+}
+
+.account-info-transactions-row-item:nth-child(even) {
+}
+
+.account-info-transactions-row-item:nth-child(odd) {
+}
+
+.account-info-transactions-row-item,
+.account-info-transactions-column-header {
+  /* margin: 0 1rem; */
+}
+
+.address-link {
+  color: rgb(197, 166, 228);
+  cursor: pointer;
+}
+
+.value-link {
+  color: #fbaf00;
+  cursor: pointer;
+}
+
+.address-link:hover,
+.value-link:hover {
+  color: #ecc15a;
 }

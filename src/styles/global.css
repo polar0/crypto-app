@@ -120,9 +120,8 @@ ul {
   padding: 1rem;
 }
 
-.error {
+.notif {
   position: absolute;
-  background: rgba(166, 66, 83, 0.8);
   color: #ffffff;
   top: 1rem;
   right: 1rem;
@@ -134,6 +133,14 @@ ul {
   transition: opacity 0.5s;
 }
 
-.error.active {
+.notif.error {
+  background: rgba(166, 66, 83, 0.8);
+}
+
+.notif.info {
+  background: rgba(97, 201, 97, 0.8);
+}
+
+.notif.active {
   opacity: 1;
 }

@@ -1,33 +1,22 @@
-import { fetchData, displayLoadingScreen, displayError } from '../utils';
+import { fetchData, displayLoadingScreen, displayNotif } from '../utils';
 
-async function getAdressInfo(adress) {
-  const value = await fetch(
-    `https://testnets-api.opensea.io/api/v1/collection/${adress}`,
-    { method: 'GET' },
-    // ! NON C'EST EN TESTNET
+// Api key Etherscan
+// 5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V
+
+async function getAddressInfo(address) {
+  const dataBalance = await fetchData(
+    `https://api.etherscan.io/api?module=account&action=balance&address=${address}&tag=latest&apikey=5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V`,
   );
-
-  if (!value.ok) return 'Error';
-  const data = await value.json();
-  return data;
+  const dataTransactions = await fetchData(
+    `https://api.etherscan.io/api?module=account&action=txlist&address=${address}&startblock=0&endblock=99999999&page=1&offset=20&sort=asc&apikey=5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V`,
+  );
+  return { dataBalance, dataTransactions };
 }
 
-async function getEthPrice() {
+async function getCryptoValue(currency) {
   const data = await fetchData(
-    `https://api.coingecko.com/api/v3/coins/ethereum?tickers=true&market_data=true`,
+    `https://api.coingecko.com/api/v3/coins/${currency}?tickers=true&market_data=true`,
   );
-  return data;
-}
-
-async function getConfirmationTime(gas) {
-  if (gas === '') return 'errorEmpty';
-  // const data = fetchData(
-  //   `https://api.etherscan.io/api?module=gastracker&action=gasestimate&gasprice=1000&apikey=5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V`,
-  // );
-  const data = fetchData(
-    `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=5RTBT9H4WF8D61R19UFE78Z9SMBJ6S1J9V`,
-  );
-
   return data;
 }
 
@@ -38,9 +27,4 @@ async function getSupportedCurrencies() {
   return data;
 }
 
-export {
-  getAdressInfo,
-  getEthPrice,
-  getConfirmationTime,
-  getSupportedCurrencies,
-};
+export { getAddressInfo, getCryptoValue, getSupportedCurrencies };

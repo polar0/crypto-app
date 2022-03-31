@@ -1,7 +1,7 @@
-import { loadCrypto } from './crypto/crypto-layout';
+import { displayCrypto } from './crypto/crypto-layout';
 import { cancelUpdatables } from './crypto/crypto-data';
 import { cancelCryptoSearchFunctions } from './crypto/crypto-search';
-import { loadTracker } from './tracker/tracker-layout';
+import { displayTracker } from './tracker/tracker-layout';
 import {
   loadTrackerFunctions,
   cancelTrackerFunctions,
@@ -19,17 +19,17 @@ function getPageToDisplay() {
       this.classList.add('active');
 
       if (this.value === 'crypto') {
-        loadCrypto();
+        displayCrypto();
         cancelTrackerFunctions();
       } else {
-        loadTracker();
+        displayTracker();
         loadTrackerFunctions();
         cancelUpdatables();
         cancelCryptoSearchFunctions();
       }
     });
   });
-  loadTracker();
+  displayTracker();
   loadTrackerFunctions();
 }
 

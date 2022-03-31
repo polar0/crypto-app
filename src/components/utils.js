@@ -1,17 +1,37 @@
+import { getCryptoValue } from './tracker/tracker-data';
+
+let timer;
+
 async function fetchData(url) {
-  const value = await fetch(url, { mode: 'cors' });
-  if (!value.ok) return 'Error';
+  const value = await fetch(url, { mode: 'cors' }).catch((err) => {
+    displayNotif('error', err);
+  });
+  if (!value.ok) {
+    displayNotif(
+      'error',
+      'There seems to be an error connecting to the API. Please try again later.',
+    );
+  }
   const data = await value.json();
 
   return data;
 }
 
-function displayError(err) {
-  const div = document.querySelector('.error');
+function displayNotif(category, message) {
+  clearInterval(timer);
+  const div = document.querySelector('.notif');
   div.classList.add('active');
-  div.textContent = err;
-  setTimeout(() => {
+  if (category === 'error') {
+    div.classList.add('error');
+  } else {
+    div.classList.add('info');
+  }
+  div.textContent = message;
+  timer = setInterval(() => {
     div.classList.remove('active');
+    div.classList.remove('error');
+    div.classList.remove('info');
+    clearInterval(timer);
   }, 2000);
 }
 
@@ -23,10 +43,9 @@ function displayLoadingScreen(status, parent) {
   loader.appendChild(wrapped);
 
   if (status) {
-    parent.textContent = '';
     parent.appendChild(loader);
   } else {
-    parent.textContent = '';
+    parent.removeChild(document.querySelector('#loader'));
   }
 }
 
@@ -114,45 +133,97 @@ function sortCurrencies(array) {
 }
 
 function formatPrice(price) {
-  return price
-    .toString()
-    .split('')
-    .reverse()
-    .join('')
-    .replace(/([0-9]{3})/g, '$1 ')
-    .replace(/ \./g, '.')
-    .split('')
-    .reverse()
-    .join('');
+  const newPrice = price.toString().split('.');
+  newPrice[0] = newPrice[0].replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  return newPrice.join('.');
+  /* return (
+    price
+      .toString()
+      .split('')
+      .reverse()
+      .join('')
+      .replace(/([0-9]{3})/g, '$1 ')
+      // Replace if there is a space before a dot
+      .replace(/ \./g, '.')
+      .split('')
+      .reverse()
+      .join('')
+  ); */
 }
 
 // Convert currency to crypto
 
-async function convertCurrencyToCrypto(currencyUnit, currencyValue, crypto) {
-  const cryptoValue = await getCurrencyValue(crypto);
-  const value = cryptoValue.market_data.current_price[currencyUnit];
-  const converted = currencyValue / value;
-  return converted;
+const converter = {
+  currencyToCrypto: async function (currencyUnit, currencyValue, crypto) {
+    const cryptoRef = await getCryptoValue(crypto);
+    const value = cryptoRef.market_data.current_price[currencyUnit];
+    const converted = currencyValue / value;
+    return converted;
+  },
+  cryptoToCurrency: async function (currencyUnit, cryptoValue, crypto) {
+    const cryptoRef = await getCryptoValue(crypto);
+    const value = cryptoRef.market_data.current_price[currencyUnit];
+    const converted = (cryptoValue * value).toFixed(2);
+    return converted;
+  },
+};
+
+/*
+function roundNumber(num, precision, max) {
+  num = num.toString().split('.');
+  // Don't change the number if it has no decimals
+  if (num.length === 1) {
+    return +num;
+  } else if (num[1].length <= precision) {
+    return Number(num.join('.'));
+  } else if (num[1].length <= max) {
+    return +num.join('.');
+  } else {
+    return +Number(num.join('.')).toFixed(max);
+  }
+  // if (num.lastIndexOf('0')) {
+  //
+  // } else {
+  // return num.toFixed(decimals);
+  // }
+  // return +num;
+}
+*/
+
+function getStickyHeader(element) {
+  const el = document.querySelectorAll(element);
+  for (const x of el) {
+    const observer = new IntersectionObserver(
+      ([e]) => e.target.classList.toggle('is-sticked', e.intersectionRatio < 1),
+      { threshold: [1] },
+    );
+
+    observer.observe(x);
+  }
 }
 
-async function getCurrencyValue(currency) {
-  const value = await fetch(
-    `https://api.coingecko.com/api/v3/coins/${currency}?tickers=true&market_data=true`,
-    { mode: 'cors' },
-  );
-
-  if (!value.ok) return 'Error';
-  const data = await value.json();
-  return data;
+function scrollSmoothTo(element) {
+  element.scrollIntoView({
+    behavior: 'smooth',
+  });
 }
+
+let sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+let waitFor = async function waitFor(f) {
+  while (!f()) await sleep(200);
+  return f();
+};
 
 export {
   fetchData,
-  displayError,
+  displayNotif,
   displayLoadingScreen,
   displayUpdateTime,
   sortData,
   sortCurrencies,
   formatPrice,
-  convertCurrencyToCrypto,
+  converter,
+  getStickyHeader,
+  scrollSmoothTo,
+  waitFor,
 };

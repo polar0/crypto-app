@@ -1,15 +1,14 @@
 import {
-  loadCurrencyData,
+  displayCurrencyData,
   getAllCurencyData,
   getTrendingCurrencyData,
   getTopCurrencyData,
 } from './crypto-data';
-import { displayLoadingScreen, sortData } from '../utils';
-
-const container = document.querySelector('.search-content');
+import { displayLoadingScreen, sortData, waitFor } from '../utils';
 
 let currencies;
 let trending;
+let loaded = false;
 let popular = [];
 let searchActive;
 
@@ -20,7 +19,9 @@ async function loadSearchFunctions() {
     .addEventListener('click', getCurrencyInput);
   currencies = await getAllCurencyData();
   trending = await getTrendingCurrencyData();
+  loaded = true;
 
+  // Get popular coins to display first on search input
   let temp = await getTopCurrencyData(100);
 
   for (const coin of trending.coins) {
@@ -33,25 +34,41 @@ async function loadSearchFunctions() {
 }
 
 function getCurrencyInput(e) {
-  console.log(e.target);
   // Get the crypto on Enter
   if (e.code === 'Enter') {
-    loadCurrencyData(this.value.toLowerCase());
+    displayCurrencyData(this.value.toLowerCase());
     hideSearchScreen();
     // Hide the screen on Escape
   } else if (e.code === 'Escape') {
     hideSearchScreen();
   } else if (e.target === document.querySelector('.search-button')) {
-    loadCurrencyData(
+    displayCurrencyData(
       document.querySelector('input#crc-search').value.toLowerCase(),
     );
     hideSearchScreen();
     e.stopPropagation();
   } else {
-    showRelatedCurrency(this.value);
+    loadSearchScreen(this);
   }
-  // display trending coins if search is empty
-  this.value === '' && showTrendingCurrency();
+}
+
+async function loadSearchScreen(input) {
+  // Display the search screen
+  document.querySelector('#blur-container').classList.add('blur');
+  document.querySelector('.search-container').style.display = 'grid';
+  document.querySelector('.search-content').textContent = '';
+
+  // Display loading screen while waiting for data
+  displayLoadingScreen(true, document.querySelector('.search-content'));
+  await waitFor(() => loaded);
+  displayLoadingScreen(false, document.querySelector('.search-content'));
+
+  // Get the appropriate display for the input
+  if (input.value === '') {
+    displaySearchScreen(trending);
+  } else {
+    showRelatedCurrency(input.value);
+  }
 }
 
 async function showRelatedCurrency(value) {
@@ -63,11 +80,6 @@ async function showRelatedCurrency(value) {
   displaySearchScreen(matches);
 }
 
-async function showTrendingCurrency() {
-  document.activeElement === document.querySelector('input#crc-search') &&
-    displaySearchScreen(trending);
-}
-
 function hideSearchScreen(status) {
   document.querySelector('#blur-container').classList.remove('blur');
   document.querySelector('.search-container').style.display = 'none';
@@ -76,15 +88,18 @@ function hideSearchScreen(status) {
 }
 
 async function displaySearchScreen(matches) {
-  document.querySelector('#blur-container').classList.add('blur');
-  document.querySelector('.search-container').style.display = 'grid';
-  document.querySelector('.search-content').textContent = '';
+  if (matches === trending) {
+    document.querySelector('.search-title').textContent = 'Trending';
+    for (const coin of trending.coins) {
+      const item = createTrendingBox(coin.item);
+      document.querySelector('.search-content').appendChild(item);
 
-  currencies === undefined
-    ? displayLoadingScreen(true, document.querySelector('.search-content'))
-    : displayLoadingScreen(false, document.querySelector('.search-content'));
-
-  if (matches !== trending) {
+      item.addEventListener('click', function () {
+        displayCurrencyData(coin.item.id);
+        hideSearchScreen();
+      });
+    }
+  } else {
     document.querySelector('.search-title').textContent = 'Result';
 
     matches.length > 10 ? (length = 10) : (length = matches.length);
@@ -93,18 +108,7 @@ async function displaySearchScreen(matches) {
       document.querySelector('.search-content').appendChild(item);
 
       item.addEventListener('click', function () {
-        loadCurrencyData(this.children[3].textContent);
-        hideSearchScreen();
-      });
-    }
-  } else {
-    document.querySelector('.search-title').textContent = 'Trending';
-    for (const coin of trending.coins) {
-      const item = createTrendingBox(coin.item);
-      document.querySelector('.search-content').appendChild(item);
-
-      item.addEventListener('click', function () {
-        loadCurrencyData(coin.item.id);
+        displayCurrencyData(this.children[3].textContent);
         hideSearchScreen();
       });
     }
@@ -193,16 +197,6 @@ function getFocus(e) {
 
 function cancelCryptoSearchFunctions() {
   document.removeEventListener('click', getFocus);
-  document
-    .querySelector('.search-button')
-    .removeEventListener('click', getCurrencyInput);
 }
 
-// Eventuellement trier par market cap avec un autre outil
-
-export {
-  getCurrencyInput,
-  showTrendingCurrency,
-  loadSearchFunctions,
-  cancelCryptoSearchFunctions,
-};
+export { getCurrencyInput, loadSearchFunctions, cancelCryptoSearchFunctions };

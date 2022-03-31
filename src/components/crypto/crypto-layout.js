@@ -1,18 +1,14 @@
-import { loadLeaderboard } from './crypto-data';
-import {
-  getCurrencyInput,
-  showTrendingCurrency,
-  loadSearchFunctions,
-} from './crypto-search';
+import { displayLeaderboard } from './crypto-data';
+import { getCurrencyInput, loadSearchFunctions } from './crypto-search';
 
 const container = document.querySelector('.content');
 
-function loadCrypto() {
+function displayCrypto() {
   container.textContent = '';
   container.classList.add('page-1');
-  const error = document.createElement('div');
-  error.classList.add('error');
-  container.appendChild(error);
+  const notif = document.createElement('div');
+  notif.classList.add('notif');
+  container.appendChild(notif);
 
   const content = document.createElement('div');
   content.classList.add('crypto');
@@ -208,15 +204,15 @@ function createHeader() {
 function loadCryptoFunctions() {
   const leaderboardLimit = document.querySelector('#leaderboard select');
   leaderboardLimit.addEventListener('input', function () {
-    loadLeaderboard(this.value);
+    displayLeaderboard(this.value);
   });
-  loadLeaderboard(10);
+  displayLeaderboard(10);
 
   const currencySearchInput = document.querySelector('input#crc-search');
   currencySearchInput.addEventListener('keyup', getCurrencyInput);
-  currencySearchInput.addEventListener('focus', showTrendingCurrency);
+  currencySearchInput.addEventListener('focus', getCurrencyInput);
 
   loadSearchFunctions();
 }
 
-export { loadCrypto };
+export { displayCrypto };

@@ -1,4 +1,4 @@
-import { displayLoadingScreen, displayError } from '../utils';
+import { displayLoadingScreen, displayNotif } from '../utils';
 import { createItem, updateTable } from './crypto-content';
 import { fetchData, displayUpdateTime } from '../utils';
 
@@ -49,6 +49,7 @@ async function getTopCurrencyData(num) {
 }
 
 async function getAllCurencyData() {
+  await waitFor(2000);
   const data = await fetchData(
     `https://api.coingecko.com/api/v3/coins/list?include_platform=true`,
   );
@@ -56,13 +57,16 @@ async function getAllCurencyData() {
 }
 
 async function getTrendingCurrencyData() {
+  await waitFor(2000);
   const data = await fetchData(
     `https://api.coingecko.com/api/v3/search/trending`,
   );
   return data;
 }
 
-async function loadCurrencyData(input) {
+const waitFor = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+
+async function displayCurrencyData(input) {
   const container = document.querySelector('#result .assets-table');
   const content = document.querySelector('#result .table-content');
   const currencySearchInput = document.querySelector('input#crc-search');
@@ -72,7 +76,7 @@ async function loadCurrencyData(input) {
   displayLoadingScreen(false, content);
 
   if (data === 'Error') {
-    displayError(`We could not find a currency named '${input}'`);
+    displayNotif('error', `We could not find a currency named '${input}'`);
     currencySearchInput.focus();
     return;
   }
@@ -83,7 +87,7 @@ async function loadCurrencyData(input) {
   updateSingleCurrency(content, 'none', input);
 }
 
-async function loadLeaderboard(limit) {
+async function displayLeaderboard(limit) {
   const leaderboard = document.querySelector('#leaderboard .table-content');
   displayLoadingScreen(true, leaderboard);
   const data = await getTopCurrencyData(limit);
@@ -130,7 +134,7 @@ export {
   getTopCurrencyData,
   getAllCurencyData,
   getTrendingCurrencyData,
-  loadCurrencyData,
-  loadLeaderboard,
+  displayCurrencyData,
+  displayLeaderboard,
   cancelUpdatables,
 };
