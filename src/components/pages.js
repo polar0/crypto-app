@@ -29,8 +29,7 @@ function getPageToDisplay() {
       }
     });
   });
-  displayTracker();
-  loadTrackerFunctions();
+  displayCrypto();
 }
 
 export { getPageToDisplay };
