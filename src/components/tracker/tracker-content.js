@@ -252,7 +252,6 @@ function updateAdressInfo(account, elements) {
     'Receiver',
     'Value (ETH)',
   ];
-  console.log(account['transactions']);
 
   for (let i = 0; i < transactionsColumns.length / 2; i++) {
     const column = createTransactionsColumn(
