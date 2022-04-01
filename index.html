@@ -5,8 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>CryptoIndex</title>
-    <script defer src="main.bundle.js"></script>
-  </head>
+  <script defer src="main.bundle.js"></script></head>
   <body>
     <div id="blur-container"></div>
     <div id="container">
@@ -14,65 +13,10 @@
         <div class="title">CryptoIndex</div>
         <div class="menu">
           <button value="crypto">Crypto</button>
-          <button value="tracker">Trackers</button>
+          <button value="tracker">ETH Trackers</button>
         </div>
       </div>
-      <div class="content">
-        <div class="crypto active">
-          <div class="search">
-            <input
-              type="text"
-              name="crc-search"
-              id="crc-search"
-              placeholder="Search for a cryptocurrency"
-            />
-            <i class="logo fa-solid fa-search"></i>
-          </div>
-          <div class="error"></div>
-          <div id="result">
-            <div class="assets-table">
-              <div class="table-header">
-                <div class="table-header-item">Rank</div>
-                <div class="table-header-item">Currency</div>
-                <div class="table-header-item">Price</div>
-                <div class="table-header-item">Balance</div>
-                <div class="table-header-item">Variation</div>
-              </div>
-              <div class="table-content">
-                <!--         
-                  <div class="table-item-balance">
-                    <div class="table-item-balance-real">$ 110</div>
-                    <div class="table-item-balance-crypto">0.00259074 BTC</div>
-                  </div>
-                  <div class="table-item-variation">+7.45&nbsp;%</div>
- -->
-              </div>
-            </div>
-          </div>
-          <div id="leaderboard">
-            <div class="assets-table">
-              <div class="table-title">
-                <div class="head">Leaderboard</div>
-                <select name="leaderboard-count" id="leaderboard-count">
-                  <option value="10">10</option>
-                  <option value="20">20</option>
-                  <option value="50">50</option>
-                  <option value="100">100</option>
-                </select>
-              </div>
-              <div class="table-header">
-                <div class="table-header-item">Rank</div>
-                <div class="table-header-item">Currency</div>
-                <div class="table-header-item">Price</div>
-                <div class="table-header-item">Balance</div>
-                <div class="table-header-item">Variation</div>
-              </div>
-              <div class="table-content"></div>
-            </div>
-          </div>
-        </div>
-        <div class="tracker" style="display: none">ssszezeze</div>
-      </div>
+      <div class="content"></div>
       <div class="footer">Powered by Etherscan.io & Coingecko.com APIs</div>
     </div>
   </body>
