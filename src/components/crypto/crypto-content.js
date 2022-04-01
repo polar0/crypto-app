@@ -50,6 +50,8 @@ function createItem(data) {
   low.classList.add('table-item-limits-low');
   low.textContent = Number(data.low.toFixed(4));
 
+  // Allow the user to delete this asset from the list
+
   item.appendChild(rank);
   icon.appendChild(iconImg);
   currency.appendChild(icon);

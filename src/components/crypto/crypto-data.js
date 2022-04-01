@@ -79,12 +79,13 @@ async function displayCurrencyData(input) {
     displayNotif('error', `We could not find a currency named '${input}'`);
     currencySearchInput.focus();
     return;
+  } else {
+    const item = createItem(data);
+    container.style.display = 'grid';
+    content.textContent = '';
+    content.appendChild(item[0]);
+    updateSingleCurrency(content, 'none', input);
   }
-
-  const item = createItem(data);
-  container.style.display = 'grid';
-  content.appendChild(item[0]);
-  updateSingleCurrency(content, 'none', input);
 }
 
 async function displayLeaderboard(limit) {
@@ -94,7 +95,7 @@ async function displayLeaderboard(limit) {
   displayLoadingScreen(false, leaderboard);
 
   for (let i = 0; i < limit; i++) {
-    const item = createItem(data[i]);
+    const item = createItem(data[i], 'leaderboard');
     leaderboard.appendChild(item[0]);
   }
   updateLeaderboard(leaderboard, limit);
