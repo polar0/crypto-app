@@ -28,7 +28,7 @@ Once again, I took different inspiration, yet for the same purpose of learning t
 - Click on any address to access its balance and transactions
 - Click on the transaction amount to convert it to your currency
 
-## What I've learned (a lot) :
+## What I've learned (a lot!) :
 
 - Using an API to fetch external data
 - Using Promises, async and await
