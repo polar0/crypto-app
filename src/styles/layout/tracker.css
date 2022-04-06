@@ -107,7 +107,7 @@
   grid-template-columns: 1fr 1fr;
   align-items: end;
   gap: 2rem;
-  overflow: scroll;
+  overflow: auto;
 }
 
 .eth-calculator-caption {
