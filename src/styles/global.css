@@ -95,7 +95,7 @@ ul {
 
 #blur-container {
   background: rgba(0, 0, 0, 0);
-  width: 100vw;
+  width: 100%;
   min-height: 100%;
   position: absolute;
   /* pointer-events: none; */

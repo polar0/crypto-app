@@ -11,7 +11,7 @@
 }
 
 .crypto > div:not(.search) {
-  overflow: scroll;
+  overflow: auto;
   min-width: 750px;
 }
 
